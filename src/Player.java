@@ -1,14 +1,32 @@
-import gpdraw.DrawingTool;
 
 public class Player {
 	private int x, y;
 	private double angle;
-	
-	
-	public Player() {
+	private int[] dStep, xStep, yStep;
+	private int[][] map;
+
+	public Player(int[][] floor, int[] d, int[] xs, int[] ys) { // Constructor
 		x = 0;
 		y = 0;
 		angle = 0.0;
+		dStep = d;
+		xStep = xs;
+		yStep = ys;
+		map = floor;
+	}	}
+
+	public double cast(int angle){
+		//Given the angle of the ray, not the angle of the player
+		//returns the distance traveled by the ray fired
+		double u = x;
+		double v = y;
+		int intCount=0; //tracks the amount of intervals traveled by ray
+		while (floor[(int) u][(int) v]==0){
+			u+=xStep[angle];
+			v+=yStep[angle];
+			intCount++;
+		}
+		return intCount*dStep[angle];
 	}
 }
 
