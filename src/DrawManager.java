@@ -7,7 +7,7 @@ public class DrawManager {
 	private static final int
 			WIDTH = 800,
 			HEIGHT = 600,
-			FOV = 80,
+			FOV = 60,
 			RAYCOUNT= 160,
 			RAYWIDTH = WIDTH/RAYCOUNT;
 	
@@ -58,6 +58,5 @@ public class DrawManager {
 			pen.up();
 			pen.move(pen.getXPos() + RAYWIDTH, 0);
 		}
-		
 	}
 }

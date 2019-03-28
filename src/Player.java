@@ -4,28 +4,40 @@ public class Player {
 	private int x, y;
 	private double angle;
 	
+	Level currentLevel;
 	
 	public Player() {
 		x = 0;
 		y = 0;
 		angle = 0.0;
 	}
+	
+	public double castRay(int angle) {
+		
+		return -1;
+	}
 }
 
-
 /*
-Define each ray using slope
-Each ray has a horizontal direction, and vertical direction can be determined from slope
-^ I'm not sure if it's quicker to to store both horiz. and vert. direction or to store one and calculate one
-Check vertical intersections by solving for y with given x values incremented as an int
-Check horizontal intersections by solving for x given y
+1. Take first two values using offset for one coord, and tan(x) for the other.
+2. Find the lesser of the first two distances
+3. Iterate over the horiz. and vert. collisions, starting with the lesser of the first two collisions.
+	(i.e. if the first collision is horizontal, iter over horiz. then vert. then horiz. then vert. etc.)
+4. Upon collision, find viewpoint distance (as opposed to raw distance along the ray) use crazy math
 
-After deciding not to be an idiot I realize that delta(y) per x val is a fixed constant, and vice versa for y
-Calc will be different for the first horiz. and vert. intersections, and the following intersections will be fixed
-increments from the initial intersections
+*CRAZY MATH*
+viewdist is the literal distance between player and the collision
+playerdist is the distance along the ray of playerAngle
+theta is the angle between viewdist and playerdist
 
-Check Vertical:
-Store x direction as +1 or -1
-Calc y step constant once per new rotation
 
+Angles and things:
+Ray angle increases from right to left
+Least value (furthest right) is playerAngle - fov/2
+
+theta = totalangle + rayangle
+
+playerdist = (viewdist)cos(theta)
+
+Use wolfenstein math if sqrts are too slow, but they probably aren't
  */
