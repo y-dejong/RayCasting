@@ -14,7 +14,7 @@ public class Player {
 		xStep = xs;
 		yStep = ys;
 		map = floor;
-	}	}
+	}
 
 	public double cast(int angle){
 		//Given the angle of the ray, not the angle of the player
