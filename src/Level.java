@@ -29,4 +29,8 @@ public class Level {
 			System.err.println("OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this! " + e.getMessage());
 		}
 	}
+	
+	public int get(int x, int y) {
+		return matrix[y][x];
+	}
 }

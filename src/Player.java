@@ -1,37 +1,40 @@
+import gpdraw.DrawingTool;
 
 public class Player {
 	private int x, y;
-	private double angle;
+	private int angle;
 	
-	private int[] dStep, xStep, yStep;
-	private int[][] map;
+	private double[] dStep, xStep, yStep;
+	private Level map;
+	
+	private DrawManager dm;
 
-	public Player(int[][] floor, int[] d, int[] xs, int[] ys) { // Constructor
+	public Player(Level l, double[] xs, double[] ys, double[] ds) { // Constructor
 		x = 0;
 		y = 0;
-		angle = 0.0;
-		dStep = d;
+		angle = 0;
 		xStep = xs;
 		yStep = ys;
-		map = floor;
+		dStep = ds;
+		map = l;
+		dm = new DrawManager();
 	}
 
 	public double cast(int angle){
 		//Given the angle of the ray, not the angle of the player
-		//returns the distance traveled by the ray fired
-		double u = x;
-		double v = y;
+		//returns the literal distance traveled by the ray fired
+		double rayX = x;
+		double rayY = y;
 		int intCount=0; //tracks the amount of intervals traveled by ray
-		while (map[(int) u][(int) v]==0){
-			u+=xStep[angle];
-			v+=yStep[angle];
+		while (map.get((int)rayX, (int)rayY) == 0){
+			rayX+=xStep[angle];
+			rayY+=yStep[angle];
 			intCount++;
 		}
 		return intCount*dStep[angle];
 	}
 	
 	public double castRay(int angle) {
-		
 		return -1;
 	}
 }

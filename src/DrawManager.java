@@ -4,12 +4,11 @@ import java.awt.Color;
 
 public class DrawManager {
 	
+	public static final int FOV = 60;
 	private static final int
 			WIDTH = 800,
 			HEIGHT = 600,
-			FOV = 60,
-			RAYCOUNT= 160,
-			RAYWIDTH = WIDTH/RAYCOUNT;
+			RAYWIDTH = WIDTH/FOV;
 	
 	private SketchPad pad;
 	private DrawingTool pen;
@@ -40,7 +39,7 @@ public class DrawManager {
 		this.frontC = frontC;
 		this.backC = backC;
 		
-		lines = new int[RAYCOUNT];
+		lines = new int[FOV];
 	}
 	
 	public void setLine(int index, int val) {
