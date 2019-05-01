@@ -11,6 +11,9 @@ for i in range(0, 90) :
     divisor = 1/max
     if tani > max:
         divisor = tani/max
+        if 1/divisor > max:
+            divisor = 10
+
     print("divisor: " + str(divisor))
     xStep = 1/divisor
     yStep = tani/divisor
