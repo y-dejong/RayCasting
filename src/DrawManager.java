@@ -1,6 +1,8 @@
 import gpdraw.*;
 
+import javax.swing.*;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 
 public class DrawManager {
 	
@@ -10,6 +12,7 @@ public class DrawManager {
 			HEIGHT = 600,
 			RAYWIDTH = WIDTH/FOV;
 	
+	private SketchPadPanel padPanel;
 	private SketchPad pad;
 	private DrawingTool pen;
 	private Color topC, botC, frontC, backC;
@@ -31,7 +34,11 @@ public class DrawManager {
 	}
 	
 	public DrawManager(Color topC, Color botC, Color frontC, Color backC) {
-		pad = new SketchPad(800, 600);
+		
+		padPanel = new SketchPadPanel(0);
+		padPanel.setSize(800, 600);
+		pad = new SketchPad(padPanel);
+		pad.setSize(800, 600);
 		pen = new DrawingTool(pad);
 		pen.setWidth(RAYWIDTH);
 		this.topC = topC;
@@ -57,5 +64,38 @@ public class DrawManager {
 			pen.up();
 			pen.move(pen.getXPos() + RAYWIDTH, 0);
 		}
+	}
+	
+	public void handleInput() {
+		
+		pen.forward(1);
+		this.padPanel.getActionMap().put("handleKey", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				switch(actionEvent.getActionCommand()) {
+				
+				case "w":
+					pen.setDirection(90);
+					break;
+				case "a":
+					pen.turnLeft(5);
+					break;
+				case "s":
+					pen.setDirection(270);
+					break;
+				case "d":
+					pen.turnRight(5);
+					break;
+				default:
+					System.out.println("Unhandled action: " + actionEvent.getActionCommand());
+					
+				}
+			}
+		});
+		
+		this.padPanel.getInputMap().put(KeyStroke.getKeyStroke("W"), "handleKey");
+		this.padPanel.getInputMap().put(KeyStroke.getKeyStroke("A"), "handleKey");
+		this.padPanel.getInputMap().put(KeyStroke.getKeyStroke("S"), "handleKey");
+		this.padPanel.getInputMap().put(KeyStroke.getKeyStroke("D"), "handleKey");
 	}
 }

@@ -1,38 +1,76 @@
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
 import gpdraw.*;
 
 public class App {
 	
-	public static void main(String[] args) {
+	Level level1;
+	Player p1;
+	boolean quit = false;
+	
+	private void trigvalsVisualTest() {
+		DrawingTool p = new DrawingTool(0);
+		for (int i = 0; i < 360; i++) {
+			p.home();
+			p.down();
+			p.setColor(Color.BLUE);
+			p.fillRect(500, 500);
+			p.setDirection(0);
+			p.setColor(Color.BLACK);
+			p.drawString(String.valueOf(i));
+			p.forward(Ray.xStep[i]*500);
+			p.turnLeft();
+			p.forward(Ray.yStep[i]*500);
+			p.turnLeft(90+i);
+			p.forward(Ray.dStep*500);
+			p.up();
+			try { TimeUnit.MILLISECONDS.sleep(16); }
+			catch (InterruptedException e) { System.out.println("InterruptedException while sleeping in trigvals test"); }
+			
+		}
+	}
+	
+	private int load() {
 		
-		double[] xStep, yStep, dStep;
-		xStep = yStep = dStep = new double[360];
+		trigvalsVisualTest();
+		
+		level1 = new Level("data/1.map");
+		p1 = new Player(level1);
+		
+		return 0;
+	}
+	
+	private void update() {
+		
+		p1.update();
 		
 		try {
-			
-			Scanner trigFile = new Scanner(new File("data/trigvals.txt"));
-			
-			int i = 0;
-			
-			while(trigFile.hasNextLine()) {
-				
-				i = trigFile.nextInt();
-				xStep[i] = trigFile.nextDouble();
-				yStep[i] = trigFile.nextDouble();
-				dStep[i] = trigFile.nextDouble();
-			}
-			
-		} catch(Exception e) {
-			
-			if(e instanceof FileNotFoundException) System.err.println("Trigvals file not found");
-			else System.err.println("Other Exception: " + e.getMessage());
+			TimeUnit.MILLISECONDS.sleep(16);
+		} catch (InterruptedException e) {
+			System.out.println("InterruptedException while sleeping in main loop");
+		}
+	}
+	
+	private void unload() {
+	
+	}
+	
+	public static void main(String[] args) {
+		
+		App a = new App();
+		
+		if(a.load() != 0) {
+			System.out.println("Whoops");
+			return;
 		}
 		
 		
-		Level level1 = new Level("data/1.map");
-		Player player = new Player(level1, xStep, yStep, dStep);
+		while(!a.quit) {
+			a.update();
+			
+		}
+		
+		a.unload();
 	}
 }
