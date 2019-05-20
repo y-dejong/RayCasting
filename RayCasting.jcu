@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace_user>
+	<active_project>
+		<label>RayCasting</label>
+	</active_project>
+	<projects>
+		<project>
+			<label>RayCasting</label>
+			<showfiles>false</showfiles>
+			<folderitem>
+				<path>.idea</path>
+			</folderitem>
+			<folderitem>
+				<path>.idea\codeStyles</path>
+			</folderitem>
+			<folderitem>
+				<path>data</path>
+			</folderitem>
+			<folderitem>
+				<path>lib</path>
+			</folderitem>
+			<folderitem>
+				<path>lib\.idea</path>
+			</folderitem>
+			<folderitem>
+				<path>out</path>
+			</folderitem>
+			<folderitem>
+				<path>src</path>
+			</folderitem>
+		</project>
+	</projects>
+</workspace_user>

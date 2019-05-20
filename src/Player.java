@@ -3,30 +3,34 @@ public class Player {
 	private int x, y;
 	private int angle;
 	private Ray[] rays;
-	
+
 	private Level map;
-	
+
 	private DrawManager dm;
 
 	public Player(Level l) { // Constructor
-		x = 0;
-		y = 0;
+		x = 2;
+		y = 3;
 		angle = 0;
 		rays = new Ray[DrawManager.FOV];
 		map = l;
 		dm = new DrawManager();
+		for(int i = 0;i<rays.length;i++){
+			rays[i] = new Ray(l);
+		}
 	}
 
 	public void update() {
-		dm.handleInput();
+		this.castAll();
+		dm.drawFrame();
 	}
-	
-	
-	
+
+
+
 	public void castAll() {
 		int cAngle = this.angle + DrawManager.FOV/2 - 1;
 		for(int i = 0; i < DrawManager.FOV; i++) {
-			
+
 			dm.setLine(i,
 					(int)rays[i].castRay(x, y, cAngle) // TODO: convert from literaldist to viewdist
 					);

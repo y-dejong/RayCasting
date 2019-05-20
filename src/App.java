@@ -4,11 +4,11 @@ import java.util.concurrent.TimeUnit;
 import gpdraw.*;
 
 public class App {
-	
+
 	Level level1;
 	Player p1;
 	boolean quit = false;
-	
+
 	private void trigvalsVisualTest() {
 		DrawingTool p = new DrawingTool(0);
 		for (int i = 0; i < 360; i++) {
@@ -27,50 +27,50 @@ public class App {
 			p.up();
 			try { TimeUnit.MILLISECONDS.sleep(16); }
 			catch (InterruptedException e) { System.out.println("InterruptedException while sleeping in trigvals test"); }
-			
+
 		}
 	}
-	
+
 	private int load() {
-		
-		trigvalsVisualTest();
-		
-		level1 = new Level("data/1.map");
+
+		//trigvalsVisualTest();
+
+		level1 = new Level("C:\\Users\\APCS\\Documents\\RayCasting\\data\\1.map");
 		p1 = new Player(level1);
-		
+
 		return 0;
 	}
-	
+
 	private void update() {
-		
+
 		p1.update();
-		
+
 		try {
 			TimeUnit.MILLISECONDS.sleep(16);
 		} catch (InterruptedException e) {
 			System.out.println("InterruptedException while sleeping in main loop");
 		}
 	}
-	
+
 	private void unload() {
-	
+
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		App a = new App();
-		
+
 		if(a.load() != 0) {
 			System.out.println("Whoops");
 			return;
 		}
-		
-		
+
+
 		while(!a.quit) {
 			a.update();
-			
+
 		}
-		
+
 		a.unload();
 	}
 }

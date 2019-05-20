@@ -4,16 +4,16 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Level {
-	
+
 	int[][] matrix;
-	
+
 	public Level(String file) {
 		matrix = new int[5][10];
 		try {
 			Scanner matrixfile = new Scanner(new File(file));
 			int row = 0;
 			while(matrixfile.hasNextLine()) {
-				
+
 				String line = matrixfile.nextLine();
 				for(int i = 0; i < line.length(); ++i) {
 					matrix[row][i] = line.charAt(i);
@@ -29,7 +29,7 @@ public class Level {
 			System.err.println("OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this! " + e.getMessage());
 		}
 	}
-	
+
 	public int get(int x, int y) {
 		return matrix[y][x];
 	}
