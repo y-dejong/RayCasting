@@ -16,7 +16,7 @@ public class Level {
 
 				String line = matrixfile.nextLine();
 				for(int i = 0; i < line.length(); ++i) {
-					matrix[row][i] = line.charAt(i);
+					matrix[row][i] = (int) line.substring(i,i+1);
 					System.out.printf("Added %s to matrix[%d][%d]\n", line.charAt(i), row, i);
 				}
 				row++;
