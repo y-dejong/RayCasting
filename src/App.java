@@ -34,7 +34,8 @@ public class App {
 	private int load() {
 
 		//trigvalsVisualTest();
-
+		
+		System.out.println(System.getProperty("os.name"));
 		level1 = new Level("C:\\Users\\APCS\\Documents\\RayCasting\\data\\1.map");
 		p1 = new Player(level1);
 
