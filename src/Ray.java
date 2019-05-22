@@ -12,6 +12,8 @@ public class Ray {
 	public double castRay(int x, int y, int angle){
 		//Given the angle of the ray, not the angle of the player
 		//returns the literal distance traveled by the ray fired
+		if(angle < 0) angle = 360 + angle;
+		
 		double rayX = x;
 		double rayY = y;
 		int intCount=0; //tracks the amount of intervals traveled by ray
@@ -22,6 +24,8 @@ public class Ray {
 			rayX+=xStep[angle];
 			rayY+=yStep[angle];
 			intCount++;
+			if(rayX < 0 || rayY < 0 ||
+					rayX > map.xSize()-1 || rayY > map.ySize()-1) return 0;
 		}
 
 		return dStep*(double) intCount;

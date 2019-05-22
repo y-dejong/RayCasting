@@ -33,4 +33,7 @@ public class Level {
 	public int get(int x, int y) {
 		return matrix[y][x];
 	}
+	
+	public int xSize() { return matrix[0].length; }
+	public int ySize() { return matrix.length; }
 }

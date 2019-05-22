@@ -30,10 +30,11 @@ public class Player {
 	public void castAll() {
 		int cAngle = this.angle + DrawManager.FOV/2 - 1;
 		for(int i = 0; i < DrawManager.FOV; i++) {
-			System.out.println(rays[i].castRay(x, y, cAngle));
+			double rayDist = rays[i].castRay(x, y, cAngle);
+			System.out.println("Got dist " + rayDist + "from angle " + cAngle);
 
 			dm.setLine(i,
-					2-rays[i].castRay(x, y, cAngle) // TODO: convert from literaldist to viewdist
+					2-rayDist // TODO: convert from literaldist to viewdist
 					);
 			cAngle--;
 		}
