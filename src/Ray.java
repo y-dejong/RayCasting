@@ -17,13 +17,13 @@ public class Ray {
 		int intCount=0; //tracks the amount of intervals traveled by ray
 
 		while (map.get((int)rayX, (int)rayY) == 0){
-			System.out.println(rayX + " " + rayY);
+			//System.out.println(rayX + " " + rayY);
 
 			rayX+=xStep[angle];
 			rayY+=yStep[angle];
 			intCount++;
 		}
-		return intCount*dStep;
+		return dStep*(double) intCount;
 	}
 
 	//INIT trigvals
@@ -33,7 +33,7 @@ public class Ray {
 				_yStep = new double[360];
 
 
-		double divisor = 10;
+		double divisor = 100;
 
 		for(int i = 0; i < 90; i++) {
 			_xStep[i] = Math.cos(i*Math.PI/180)/divisor;
@@ -41,14 +41,14 @@ public class Ray {
 		}
 
 		_xStep[90] = 0;
-		_yStep[90] = .1;
+		_yStep[90] = .01;
 
 		for (int i = 0; i < 90; i++) {
 			_xStep[i+90] = _xStep[90-i]*-1;
 			_yStep[i+90] = _yStep[90-i];
 		}
 
-		_xStep[180] = -.1;
+		_xStep[180] = -.01;
 		_yStep[180] = 0;
 
 		for (int i = 0; i < 90; i++) {
@@ -57,7 +57,7 @@ public class Ray {
 		}
 
 		_xStep[270] = 0;
-		_yStep[270] = -.1;
+		_yStep[270] = -.01;
 
 		for (int i = 0; i < 90; i++) {
 			_xStep[i+270] = _xStep[90-i];

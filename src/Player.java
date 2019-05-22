@@ -11,7 +11,7 @@ public class Player {
 	public Player(Level l) { // Constructor
 		x = 2;
 		y = 3;
-		angle = 0;
+		angle = 135;
 		rays = new Ray[DrawManager.FOV];
 		map = l;
 		dm = new DrawManager();
@@ -30,9 +30,10 @@ public class Player {
 	public void castAll() {
 		int cAngle = this.angle + DrawManager.FOV/2 - 1;
 		for(int i = 0; i < DrawManager.FOV; i++) {
+			System.out.println(rays[i].castRay(x, y, cAngle));
 
 			dm.setLine(i,
-					(int)rays[i].castRay(x, y, cAngle) // TODO: convert from literaldist to viewdist
+					rays[i].castRay(x, y, cAngle) // TODO: convert from literaldist to viewdist
 					);
 			cAngle--;
 		}
