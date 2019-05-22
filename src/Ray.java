@@ -23,6 +23,7 @@ public class Ray {
 			rayY+=yStep[angle];
 			intCount++;
 		}
+
 		return dStep*(double) intCount;
 	}
 
