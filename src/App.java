@@ -43,7 +43,7 @@ public class App {
 	private void update() {
 
 		p1.update();
-
+		
 		try {
 			TimeUnit.MILLISECONDS.sleep(16);
 		} catch (InterruptedException e) {

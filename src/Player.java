@@ -24,7 +24,7 @@ public class Player {
 	}
 
 	public void update() {
-		//angle++;
+		
 		this.handleInput();
 		if(angle > 359) angle = 0;
 		this.castAll();
@@ -37,10 +37,9 @@ public class Player {
 		int cAngle = this.angle + DrawManager.FOV/2 - 1;
 		for(int i = 0; i < DrawManager.FOV; i++) {
 			double rayDist = rays[i].castRay(x, y, cAngle);
-			int relAngle = cAngle;
-			if(cAngle >= 180) relAngle = cAngle - 180;
-			if(relAngle > 90) relAngle = 180 - relAngle;
-			double litDist = rayDist;
+			
+			double litDist = (rayDist/Ray.dStep)*Ray.xStep[Math.abs(this.angle-cAngle)];
+			//double litDist = rayDist;
 			
 			dm.setLine(i,
 					10-litDist // TODO: convert from literaldist to viewdist
@@ -56,6 +55,7 @@ public class Player {
 				double tempX,tempY;
 				switch(actionEvent.getActionCommand()) {
 					
+					// Movement
 					case "w":
 						tempX = x;
 						tempY = y;
@@ -89,17 +89,30 @@ public class Player {
 							angle = 360 + angle;
 						}
 						break;
+						
+						// Developer shortcut
+					case "p":
+						System.out.print(angle + ": ");
+						dm.printLines();
+						break;
+						
+						// Default
 					default:
 						System.out.println("Unhandled action: " + actionEvent.getActionCommand());
+						break;
 					
 				}
 			}
 		});
 		
+		// Movement
 		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("W"), "handleKey");
 		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("A"), "handleKey");
 		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("S"), "handleKey");
 		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("D"), "handleKey");
+		
+		// Developer shortcuts
+		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("P"), "handleKey");
 	}
 }
 

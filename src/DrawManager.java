@@ -70,7 +70,7 @@ public class DrawManager {
 		for(double i : lines) {
 			pen.move(pen.getXPos(), 30*i);
 			pen.setDirection(270);
-			int color = 255-((int)(i*25));
+			int color = ((int)(i*25));
 			if (color<0) color = 0;
 			if(color>255) color = 255;
 			
@@ -80,6 +80,14 @@ public class DrawManager {
 			pen.up();
 			pen.move(pen.getXPos() + RAYWIDTH, 0);
 		}
+	}
+	
+	public void printLines() {
+		
+		for(double i : lines) {
+			System.out.println(i + ", ");
+		}
+		System.out.println();
 	}
 /*
 	public void handleInput() {
