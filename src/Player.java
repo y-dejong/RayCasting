@@ -1,6 +1,8 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class Player {
-	private int x, y;
+	private double x, y;
 	private int angle;
 	private Ray[] rays;
 
@@ -9,9 +11,9 @@ public class Player {
 	private DrawManager dm;
 
 	public Player(Level l) { // Constructor
-		x = 2;
-		y = 3;
-		angle = 45;
+		x = 5;
+		y = 5;
+		angle = 135;
 		rays = new Ray[DrawManager.FOV];
 		map = l;
 		dm = new DrawManager();
@@ -21,6 +23,9 @@ public class Player {
 	}
 
 	public void update() {
+		//angle++;
+		this.handleInput();
+		if(angle > 359) angle = 0;
 		this.castAll();
 		dm.drawFrame();
 	}
@@ -31,13 +36,56 @@ public class Player {
 		int cAngle = this.angle + DrawManager.FOV/2 - 1;
 		for(int i = 0; i < DrawManager.FOV; i++) {
 			double rayDist = rays[i].castRay(x, y, cAngle);
-			System.out.println("Got dist " + rayDist + "from angle " + cAngle);
-
+			int relAngle = cAngle;
+			if(cAngle >= 180) relAngle = cAngle - 180;
+			if(relAngle > 90) relAngle = 180 - relAngle;
+			double litDist = rayDist;
+			
 			dm.setLine(i,
-					2-rayDist // TODO: convert from literaldist to viewdist
+					10-litDist // TODO: convert from literaldist to viewdist
 					);
 			cAngle--;
 		}
+	}
+	public void handleInput() {
+		
+		dm.padPanel.getActionMap().put("handleKey", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				switch(actionEvent.getActionCommand()) {
+					
+					case "w":
+						x+=2*Ray.xStep[angle];
+						y+=2*Ray.yStep[angle];
+						break;
+					case "a":
+						angle++;
+						if (angle>360) {
+							angle = 0 + angle;
+						}
+						
+						break;
+					case "s":
+						x-=2*Ray.xStep[angle];
+						y-=2*Ray.yStep[angle];
+						break;
+					case "d":
+						angle--;
+						if (angle<0) {
+							angle = 360 + angle;
+						}
+						break;
+					default:
+						System.out.println("Unhandled action: " + actionEvent.getActionCommand());
+					
+				}
+			}
+		});
+		
+		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("W"), "handleKey");
+		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("A"), "handleKey");
+		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("S"), "handleKey");
+		dm.padPanel.getInputMap().put(KeyStroke.getKeyStroke("D"), "handleKey");
 	}
 }
 

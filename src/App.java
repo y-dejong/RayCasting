@@ -19,24 +19,22 @@ public class App {
 			p.setDirection(0);
 			p.setColor(Color.BLACK);
 			p.drawString(String.valueOf(i));
-			p.forward(Ray.xStep[i]*500);
+			p.forward(Ray.xStep[i]*5000);
 			p.turnLeft();
-			p.forward(Ray.yStep[i]*500);
+			p.forward(Ray.yStep[i]*5000);
 			p.turnLeft(90+i);
-			p.forward(Ray.dStep*500);
+			p.forward(Ray.dStep*5000);
 			p.up();
-			try { TimeUnit.MILLISECONDS.sleep(16); }
+			try { TimeUnit.MILLISECONDS.sleep(32); }
 			catch (InterruptedException e) { System.out.println("InterruptedException while sleeping in trigvals test"); }
 
 		}
 	}
 
 	private int load() {
-
-		//trigvalsVisualTest();
 		
 		System.out.println(System.getProperty("os.name"));
-		level1 = new Level("data/1.map");
+		level1 = new Level("data/2.map");
 		p1 = new Player(level1);
 
 		return 0;

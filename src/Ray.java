@@ -9,10 +9,13 @@ public class Ray {
 		this.map = map;
 	}
 
-	public double castRay(int x, int y, int angle){
+	public double castRay(double x, double y, int angle){
 		//Given the angle of the ray, not the angle of the player
 		//returns the literal distance traveled by the ray fired
+		
 		if(angle < 0) angle = 360 + angle;
+		// Angle is negative, so adding the angle subtracts from 360
+		if(angle >= 360) angle -= 360;
 		
 		double rayX = x;
 		double rayY = y;
@@ -25,7 +28,7 @@ public class Ray {
 			rayY+=yStep[angle];
 			intCount++;
 			if(rayX < 0 || rayY < 0 ||
-					rayX > map.xSize()-1 || rayY > map.ySize()-1) return 0;
+					rayX > map.xSize() || rayY > map.ySize()) return 0;
 		}
 
 		return dStep*(double) intCount;

@@ -13,7 +13,7 @@ public class DrawManager {
 			RAYWIDTH = WIDTH/FOV;
 		//	RAYWIDTH = 1;
 
-	private SketchPadPanel padPanel;
+	public SketchPadPanel padPanel;
 	private SketchPad pad;
 	private DrawingTool pen;
 	private Color topC, botC, frontC, backC;
@@ -56,27 +56,33 @@ public class DrawManager {
 
 	public void drawFrame() {
 		pen.up();
+		pen.move(0, 0);
+		pen.setColor(Color.WHITE);
+		pen.down();
+		pen.fillRect(800, 600);
+		pen.up();
 		pen.move((-1 * WIDTH/2) + (RAYWIDTH/2+1),0); //center of leftmost ray
 		for(double i : lines) {
-			pen.move(pen.getXPos(), 100*i);
+			pen.move(pen.getXPos(), 30*i);
 			pen.setDirection(270);
+			int color = 250-((int)(i*20));
+			pen.setColor(new Color(color,color,color));
 			pen.down();
-			pen.forward(200*i);
+			pen.forward(60*i);
 			pen.up();
 			pen.move(pen.getXPos() + RAYWIDTH, 0);
 		}
 	}
-
+/*
 	public void handleInput() {
 
-		pen.forward(1);
 		this.padPanel.getActionMap().put("handleKey", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				switch(actionEvent.getActionCommand()) {
 
 				case "w":
-					pen.setDirection(90);
+					
 					break;
 				case "a":
 					pen.turnLeft(5);
@@ -99,4 +105,5 @@ public class DrawManager {
 		this.padPanel.getInputMap().put(KeyStroke.getKeyStroke("S"), "handleKey");
 		this.padPanel.getInputMap().put(KeyStroke.getKeyStroke("D"), "handleKey");
 	}
+	**/
 }
