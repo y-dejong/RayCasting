@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 
 public class Player {
 	private double x, y;
-	private int angle;
+	private int angle, SPEED;
 	private Ray[] rays;
 
 	private Level map;
@@ -11,9 +11,10 @@ public class Player {
 	private DrawManager dm;
 
 	public Player(Level l) { // Constructor
-		x = 5;
-		y = 5;
-		angle = 135;
+		x = 2;
+		y = 2;
+		angle = 90;
+		SPEED = 5;
 		rays = new Ray[DrawManager.FOV];
 		map = l;
 		dm = new DrawManager();
@@ -52,11 +53,18 @@ public class Player {
 		dm.padPanel.getActionMap().put("handleKey", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				double tempX,tempY;
 				switch(actionEvent.getActionCommand()) {
 					
 					case "w":
-						x+=2*Ray.xStep[angle];
-						y+=2*Ray.yStep[angle];
+						tempX = x;
+						tempY = y;
+						x+=SPEED*Ray.xStep[angle];
+						y+=SPEED*Ray.yStep[angle];
+						if (map.get((int) x,(int) y) == 1) {
+							x = tempX;
+							y = tempY;
+						}
 						break;
 					case "a":
 						angle++;
@@ -66,8 +74,14 @@ public class Player {
 						
 						break;
 					case "s":
-						x-=2*Ray.xStep[angle];
-						y-=2*Ray.yStep[angle];
+						tempX = x;
+						tempY = y;
+						x-=SPEED*Ray.xStep[angle];
+						y-=SPEED*Ray.yStep[angle];
+						if (map.get((int) x,(int) y) == 1) {
+							x = tempX;
+							y = tempY;
+						}
 						break;
 					case "d":
 						angle--;

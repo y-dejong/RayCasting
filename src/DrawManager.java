@@ -56,16 +56,24 @@ public class DrawManager {
 
 	public void drawFrame() {
 		pen.up();
-		pen.move(0, 0);
-		pen.setColor(Color.WHITE);
+		pen.move(0, HEIGHT/4);
+		pen.setColor(topC);
 		pen.down();
-		pen.fillRect(800, 600);
+		pen.fillRect(WIDTH, HEIGHT/2);
+		pen.up();
+		pen.move(0, -HEIGHT/4);
+		pen.setColor(botC);
+		pen.down();
+		pen.fillRect(WIDTH, HEIGHT/2);
 		pen.up();
 		pen.move((-1 * WIDTH/2) + (RAYWIDTH/2+1),0); //center of leftmost ray
 		for(double i : lines) {
 			pen.move(pen.getXPos(), 30*i);
 			pen.setDirection(270);
-			int color = 250-((int)(i*20));
+			int color = 255-((int)(i*25));
+			if (color<0) color = 0;
+			if(color>255) color = 255;
+			
 			pen.setColor(new Color(color,color,color));
 			pen.down();
 			pen.forward(60*i);
