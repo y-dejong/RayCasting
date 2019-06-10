@@ -4,12 +4,16 @@ public class Ray {
 	public static final double dStep;
 
 	private Level map;
+	private int angle;
+
+	public static int pAngle; //Player's angle
+	private double distance;
 
 	public Ray(Level map) {
 		this.map = map;
 	}
 
-	public double castRay(double x, double y, int angle){
+	public void castRay(double x, double y){
 		//Given the angle of the ray, not the angle of the player
 		//returns the literal distance traveled by the ray fired
 		
@@ -21,20 +25,41 @@ public class Ray {
 		double rayY = y;
 		int intCount=0; //tracks the amount of intervals traveled by ray
 
-		while (map.get((int)rayX, (int)rayY) == 0){
-			//System.out.println(rayX + " " + rayY);
+		while (map.get((int)rayX, (int)rayY) == 0) {
 
-			rayX+=xStep[angle];
-			rayY+=yStep[angle];
+
+			rayX += xStep[angle];
+			rayY += yStep[angle];
 			intCount++;
-			if(rayX < 0 || rayY < 0 ||
-					rayX > map.xSize() || rayY > map.ySize()) return 0;
+			if (rayX < 0 || rayY < 0 ||
+					rayX > map.xSize() || rayY > map.ySize()) this.distance = 0;
 		}
 
-		return dStep*(double) intCount;
+		this.distance = dStep * intCount;
 	}
 
-	//INIT trigvals
+	public double getRayDistance() {
+		return distance;
+	}
+
+	//Get the distance along angle = player.angle to prevent fisheye
+	public double getViewDistance() {
+		return (distance/dStep)*xStep[Math.abs(pAngle-this.angle)];
+	}
+
+	public int getAngle() {
+		return angle;
+	}
+
+	public void setAngle(int angle) {
+		this.angle = angle;
+	}
+
+	public void setpAngle(int pAngle) {
+		this.pAngle = pAngle;
+	}
+
+	//Initialize pythagorean triples to measure x and y distance along a ray when cast
 	static {
 
 		double[] _xStep = new double[360],

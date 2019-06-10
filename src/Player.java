@@ -17,10 +17,10 @@ public class Player {
 		SPEED = 5;
 		rays = new Ray[DrawManager.FOV];
 		map = l;
-		dm = new DrawManager();
 		for(int i = 0;i<rays.length;i++){
 			rays[i] = new Ray(l);
 		}
+		dm = new DrawManager(rays);
 	}
 
 	public void update() {
@@ -31,22 +31,23 @@ public class Player {
 		dm.drawFrame();
 	}
 
-
-
 	public void castAll() {
-		int cAngle = this.angle + DrawManager.FOV/2 - 1;
+
 		for(int i = 0; i < DrawManager.FOV; i++) {
-			double rayDist = rays[i].castRay(x, y, cAngle);
-			
-			double litDist = (rayDist/Ray.dStep)*Ray.xStep[Math.abs(this.angle-cAngle)];
-			//double litDist = rayDist;
-			
-			dm.setLine(i,
-					10-litDist // TODO: convert from literaldist to viewdist
-					);
-			cAngle--;
+			rays[i].castRay(this.x, this.y);
 		}
 	}
+
+	private void setRayAngles() {
+		int cAngle = this.angle + DrawManager.FOV/2 - 1;
+		for(int i = 0; i < DrawManager.FOV; i++) {
+			rays[i].setAngle(cAngle);
+			cAngle--;
+		}
+
+		Ray.pAngle = this.angle;
+	}
+
 	public void handleInput() {
 		
 		dm.padPanel.getActionMap().put("handleKey", new AbstractAction() {
@@ -68,10 +69,11 @@ public class Player {
 						break;
 					case "a":
 						angle++;
-						if (angle>360) {
-							angle = 0 + angle;
+						if (angle>359) {
+							angle = angle - 360;
 						}
-						
+						setRayAngles();
+
 						break;
 					case "s":
 						tempX = x;
@@ -88,6 +90,8 @@ public class Player {
 						if (angle<0) {
 							angle = 360 + angle;
 						}
+						setRayAngles();
+
 						break;
 						
 						// Developer shortcut

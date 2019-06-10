@@ -18,43 +18,24 @@ public class DrawManager {
 	private DrawingTool pen;
 	private Color topC, botC, frontC, backC;
 
-	double[] lines; // One int will determine height and shade on gradient
+	Ray[] rays; // One int will determine height and shade on gradient
 
-	public DrawManager() {
-		this(new Color(0x3030FF),
-				new Color(0x551111),
-				new Color(0xFFFFFF),
-				new Color(0x000000));
-	}
-
-	public DrawManager(Color topC, Color botC) {
-		this(topC,
-				botC,
-				new Color(0xFFFFFF),
-				new Color(0x000000));
-	}
-
-	public DrawManager(Color topC, Color botC, Color frontC, Color backC) {
-
+	public DrawManager(Ray[] rays) {
 		padPanel = new SketchPadPanel(0);
 		padPanel.setSize(800, 600);
 		pad = new SketchPad(padPanel);
 		pad.setSize(800, 600);
 		pen = new DrawingTool(pad);
 		pen.setWidth(RAYWIDTH);
-		this.topC = topC;
-		this.botC = botC;
-		this.frontC = frontC;
-		this.backC = backC;
-
-		lines = new double[FOV];
-	}
-
-	public void setLine(int index, double val) {
-		lines[index] = val;
+		this.topC = new Color(0x3030FF);
+		this.botC = new Color(0x551111);
+		this.frontC = new Color(0xFFFFFF);
+		this.backC = new Color(0x000000);
+		this.rays = rays;
 	}
 
 	public void drawFrame() {
+		//Draw background
 		pen.up();
 		pen.move(0, HEIGHT/4);
 		pen.setColor(topC);
@@ -66,8 +47,11 @@ public class DrawManager {
 		pen.down();
 		pen.fillRect(WIDTH, HEIGHT/2);
 		pen.up();
+
+		//Draw lines
 		pen.move((-1 * WIDTH/2) + (RAYWIDTH/2+1),0); //center of leftmost ray
-		for(double i : lines) {
+		for(Ray r : rays) {
+			double i = 10-r.getViewDistance();
 			pen.move(pen.getXPos(), 30*i);
 			pen.setDirection(270);
 			int color = ((int)(i*25));
@@ -84,8 +68,8 @@ public class DrawManager {
 	
 	public void printLines() {
 		
-		for(double i : lines) {
-			System.out.println(i + ", ");
+		for(Ray r : rays) {
+			System.out.println("RayDist: " + r.getRayDistance() + ", ViewDist: " + r.getViewDistance());
 		}
 		System.out.println();
 	}
